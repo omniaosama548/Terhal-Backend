@@ -1,0 +1,3 @@
+## Terhal_ترحال  
+
+Terhal is a discovery platform for personalized travel experiences in Egypt, leveraging GPS and AI to deliver real-time, tailored recommendations for destinations, activities, and events based on user preferences. It addresses the growing demand for authentic, user-centric travel solutions, offering a bilingual (Arabic/English) interface to cater to both local and international travelers 

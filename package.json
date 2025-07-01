@@ -1,0 +1,29 @@
+{
+  "name": "terhal-backend",
+  "version": "1.0.0",
+  "description": "Tareek (Arabic for \"Path\") is an interactive, AI-powered, gamified learning platform built to empower youth in Egypt and the MENA region with digital and programming skills. With a focus on localized content, hands-on learning, and career readiness, Tareek bridges the gap between ambition and opportunity.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tareek-edu/Terhal-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tareek-edu/Terhal-backend/issues"
+  },
+  "homepage": "https://github.com/Tareek-edu/Terhal-backend#readme",
+  "dependencies": {
+    "dotenv": "^17.0.0",
+    "express": "^5.1.0",
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.16.1",
+    "nodemon": "^3.1.10"
+  }
+}
