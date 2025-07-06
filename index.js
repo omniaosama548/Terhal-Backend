@@ -1,6 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import authRoutes from './routes/authRoutes.js';
+import favouriteRoutes from './routes/place-routes/FavouritePlace.Route.js';
+import ratingRoutes from './routes/place-routes/RatingPlace.Route.js';
 // Importing environment variables
 import dotenv from 'dotenv';
 dotenv.config();
@@ -25,6 +27,13 @@ app.get('/places', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+// favourite routes
+app.use("/api", favouriteRoutes);
+
+// Use the rating route
+app.use("/api", ratingRoutes);
+
 console.log("MONGO_URI =", process.env.MONGO_URI);
 
 mongoose.connect(process.env.MONGO_URI)
