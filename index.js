@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import authRoutes from './routes/authRoutes.js';
+import placeRoutes from "./routes/placesRoutes.js";
 // Importing environment variables
 import dotenv from 'dotenv';
 dotenv.config();
@@ -26,6 +27,13 @@ app.get('/places', async (req, res) => {
   }
 });
 console.log("MONGO_URI =", process.env.MONGO_URI);
+
+
+// This makes all /places/* go to placeRoutes
+app.use("/places", placeRoutes);
+
+
+
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
