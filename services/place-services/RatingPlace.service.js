@@ -1,6 +1,6 @@
 // services/ratingService.js
-import RatingPlace from "../../models/place-models/RatingPlace.Model.js";
-import Place from "../../models/place-models/Place.Model.js";
+import RatingPlace from "../../models/RatingPlace.Model.js";
+import Place from "../../models/Place.Model.js";
 
 export const ratePlace = async (userId, placeId, ratingValue) => {
   // Validate range

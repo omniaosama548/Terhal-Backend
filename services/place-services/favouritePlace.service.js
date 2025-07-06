@@ -1,6 +1,6 @@
 // services/favouriteService.js
-import FavouritePlace from "../../models/place-models/FavouritePlace.Model.js";
-import Place from "../../models/place-models/Place.Model.js";
+import FavouritePlace from "../../models/FavouritePlace.Model.js";
+import Place from "../../models/Place.Model.js";
 
 export const savePlaceToFavourites = async (userId, placeId) => {
   // 1️⃣ Check if place exists

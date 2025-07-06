@@ -2,7 +2,7 @@
 import mongoose from 'mongoose';
 
 const placeSchema = new mongoose.Schema({
-  Name: {   //Name with capital N to match the original code
+  name: {   
     type: String,
     required: true,
   },
