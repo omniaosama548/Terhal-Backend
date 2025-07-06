@@ -15,9 +15,9 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
 
-//get all places
+//get all places for just testing
 app.get('/places', async (req, res) => {
   try {
     const places = await mongoose.connection.db.collection('places').find({}).toArray();
@@ -29,10 +29,10 @@ app.get('/places', async (req, res) => {
 });
 
 // favourite routes
-app.use("/api", favouriteRoutes);
+app.use("/place", favouriteRoutes);
 
 // Use the rating route
-app.use("/api", ratingRoutes);
+app.use("/place", ratingRoutes);
 
 console.log("MONGO_URI =", process.env.MONGO_URI);
 

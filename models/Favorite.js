@@ -1,7 +1,7 @@
 // models/favourite.js
 import mongoose from 'mongoose';
 
-const favouritePlaceSchema = new mongoose.Schema({
+const favouriteSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: true,
@@ -15,6 +15,6 @@ const favouritePlaceSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-const FavouritePlace = mongoose.model('FavouritePlace', favouritePlaceSchema);
+const Favourite = mongoose.model('Favourite', favouriteSchema);
 
-export default FavouritePlace;
+export default Favourite;

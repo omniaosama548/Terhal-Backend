@@ -20,6 +20,7 @@ export const ratePlaceController = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
 export const getPlaceRatingController = async (req, res) => {
   const placeId = req.params.id;
 

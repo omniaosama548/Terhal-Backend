@@ -1,6 +1,6 @@
 // services/ratingService.js
-import RatingPlace from "../../models/RatingPlace.Model.js";
-import Place from "../../models/Place.Model.js";
+import Rating from "../../models/Rating.js"
+import Place from "../../models/Place.js";
 
 export const ratePlace = async (userId, placeId, ratingValue) => {
   // Validate range
@@ -15,13 +15,13 @@ export const ratePlace = async (userId, placeId, ratingValue) => {
   }
 
   // 2️⃣ Check if user has already rated -> update it, else create
-  const existing = await RatingPlace.findOne({ userId, placeId });
+  const existing = await Rating.findOne({ userId, placeId });
 
   if (existing) {
     existing.rating = ratingValue;
     await existing.save();
   } else {
-    await RatingPlace.create({
+    await Rating.create({
       userId,
       placeId,
       rating: ratingValue,
@@ -29,7 +29,7 @@ export const ratePlace = async (userId, placeId, ratingValue) => {
   }
 
   // 3️⃣ Update place avg rating
-  const allRatings = await RatingPlace.find({ placeId });
+  const allRatings = await Rating.find({ placeId });
   const avgRating = allRatings.reduce((sum, r) => sum + r.rating, 0) / allRatings.length;
 
   place.rating = avgRating;
@@ -45,7 +45,7 @@ export const getPlaceRating = async (placeId) => {
   }
 
   // ✅ 2️⃣ Get all ratings for the place
-  const ratings = await RatingPlace.find({ placeId });
+  const ratings = await Rating.find({ placeId });
 
   // ✅ 3️⃣ Calculate average rating
   let avgRating = null;
@@ -68,7 +68,7 @@ export const getUserRatingForPlace = async (userId, placeId) => {
     throw new Error("Place not found ");
   } 
     // 2️⃣ Get user's rating for the place
-    const userRating = await RatingPlace.findOne({ userId, placeId });
+    const userRating = await Rating.findOne({ userId, placeId });
     if (!userRating) {
       return { rating: null, message: "User has not rated this place" };
     }
@@ -81,14 +81,14 @@ export const deleteUserRating = async (userId, placeId) => {
     throw new Error("Place not found ");
   } 
     // 2️⃣ Check if user has rated the place
-    const userRating = await RatingPlace.findOne({ userId, placeId });
+    const userRating = await Rating.findOne({ userId, placeId });
     if (!userRating) {  
         return { message: "User has not rated this place" };
         }
     // 3️⃣ Delete user's rating
-    await RatingPlace.deleteOne({ userId, placeId });
+    await Rating.deleteOne({ userId, placeId });
     // 4️⃣ Recalculate average rating for the place
-    const allRatings = await RatingPlace.find({ placeId });
+    const allRatings = await Rating.find({ placeId });
     const avgRating = allRatings.length > 0
         ? allRatings.reduce((sum, r) => sum + r.rating, 0) / allRatings.length
         : null;

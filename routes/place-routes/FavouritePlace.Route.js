@@ -11,13 +11,13 @@ import { authMiddleware } from "../../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/place/:id/favourite", authMiddleware, addToFavourites);
+router.post("/:id/favourite", authMiddleware, addToFavourites); //used
 
 router.get("/favourites", authMiddleware, getFavouritesByUserIdController);
 
-router.delete("/place/:id/favourite", authMiddleware, removeFavouriteController);
+router.delete("/:id/favourite", authMiddleware, removeFavouriteController);
 
-router.get("/place/:id/is-favourited", authMiddleware, isPlaceFavouritedController);
+router.get("/:id/is-favourited", authMiddleware, isPlaceFavouritedController);
 
 router.delete("/favourites", authMiddleware, deleteFavouritesByUserIdController);
 

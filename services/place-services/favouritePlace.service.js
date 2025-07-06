@@ -1,6 +1,6 @@
 // services/favouriteService.js
-import FavouritePlace from "../../models/FavouritePlace.Model.js";
-import Place from "../../models/Place.Model.js";
+import Favourite from "../../models/Favorite.js";
+import Place from "../../models/Place.js";
 
 export const savePlaceToFavourites = async (userId, placeId) => {
   // 1️⃣ Check if place exists
@@ -10,18 +10,18 @@ export const savePlaceToFavourites = async (userId, placeId) => {
   }
 
   // 2️⃣ Check if already favourited
-  const exists = await FavouritePlace.findOne({ userId, placeId });
+  const exists = await Favourite.findOne({ userId, placeId });
   if (exists) {
     throw new Error("Already in favourites");
   }
 
   // 3️⃣ Save to favourites
-  const favourite = await FavouritePlace.create({ userId, placeId });
+  const favourite = await Favourite.create({ userId, placeId });
   return favourite;
 };
 export const getFavouritesByUserId = async (userId) => {
   // 1️⃣ Find favourites by userId
-  const favourites = await FavouritePlace.find({ userId }).populate("placeId");
+  const favourites = await Favourite.find({ userId }).populate("placeId");
 
   // 2️⃣ Check if any favourites found
   if (!favourites || favourites.length === 0) {
@@ -32,17 +32,17 @@ export const getFavouritesByUserId = async (userId) => {
 };
 export const removeFavourite = async (userId, placeId) => {
   // 1️⃣ Check if favourite exists
-  const favourite = await FavouritePlace.findOne({ userId, placeId });
+  const favourite = await Favourite.findOne({ userId, placeId });
   if (!favourite) {
     throw new Error("Favourite not found");
   }
   // 2️⃣ Remove favourite
-  await FavouritePlace.deleteOne({ userId, placeId });
+  await Favourite.deleteOne({ userId, placeId });
   return { message: "Favourite removed successfully" };
 };
 export const isPlaceFavourited = async (userId, placeId) => {
   // 1️⃣ Check if favourite exists
-  const favourite = await FavouritePlace.findOne({ userId, placeId });
+  const favourite = await Favourite.findOne({ userId, placeId });
   if (!favourite) {
     return false; // Not favourited
   }
@@ -50,13 +50,13 @@ export const isPlaceFavourited = async (userId, placeId) => {
 };
 export const getFavouriteCount = async (placeId) => {
   // 1️⃣ Count favourites for the place
-  const count = await FavouritePlace.countDocuments({ placeId });
+  const count = await Favourite.countDocuments({ placeId });
 
   // 2️⃣ Return count
   return count;
 };
 // 1️⃣ Find favourites by placeId
-//   const favourites = await FavouritePlace.find({ placeId }).populate("userId");
+//   const favourites = await Favourite.find({ placeId }).populate("userId");
 
 //   // 2️⃣ Check if any favourites found
 //   if (!favourites || favourites.length === 0) {
@@ -68,7 +68,7 @@ export const getFavouriteCount = async (placeId) => {
 
 // export const getFavouriteById = async (favouriteId) => {
 //   // 1️⃣ Find favourite by ID
-//   const favourite = await FavouritePlace.findById(favouriteId).populate("placeId");
+//   const favourite = await Favourite.findById(favouriteId).populate("placeId");
 
 //   // 2️⃣ Check if favourite exists
 //   if (!favourite) {
@@ -80,7 +80,7 @@ export const getFavouriteCount = async (placeId) => {
 
 // export const updateFavourite = async (favouriteId, updateData) => {
 //   // 1️⃣ Find favourite by ID
-//   const favourite = await FavouritePlace.findById(favouriteId);
+//   const favourite = await Favourite.findById(favouriteId);
 //   if (!favourite) {
 //     throw new Error("Favourite not found");
 //   }
@@ -91,7 +91,7 @@ export const getFavouriteCount = async (placeId) => {
 // };
 export const getAllFavourites = async () => {
   // 1️⃣ Get all favourites
-  const favourites = await FavouritePlace.find().populate("placeId");
+  const favourites = await Favourite.find().populate("placeId");
 
   // 2️⃣ Check if any favourites found
   if (!favourites || favourites.length === 0) {
@@ -103,7 +103,7 @@ export const getAllFavourites = async () => {
 
 export const deleteFavouritesByUserId = async (userId) => {
   // 1️⃣ Delete favourites by userId
-  const result = await FavouritePlace.deleteMany({ userId });
+  const result = await Favourite.deleteMany({ userId });
 
   // 2️⃣ Check if any favourites were deleted
   if (result.deletedCount === 0) {

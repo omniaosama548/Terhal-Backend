@@ -10,10 +10,10 @@ import { authMiddleware } from "../../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/place/:id/rate", authMiddleware, ratePlaceController);
-router.get("/place/:id/rating", getPlaceRatingController);
-router.get("/place/:id/user-rating", authMiddleware, getUserRatingForPlaceController);  
-router.delete("/place/:id/rating", authMiddleware, deleteUserRatingController);
+router.post("/:id/rate", authMiddleware, ratePlaceController); //used
+router.get("/:id/rating", getPlaceRatingController);
+router.get("/:id/user-rating", authMiddleware, getUserRatingForPlaceController);  
+router.delete("/:id/rating", authMiddleware, deleteUserRatingController);
 
 
 export default router;

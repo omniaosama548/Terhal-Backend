@@ -21,6 +21,6 @@ const ratingSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-const RatingPlace = mongoose.model('RatingPlace', ratingSchema);
+const Rating = mongoose.model('Rating', ratingSchema);
 
-export default RatingPlace;
+export default Rating;
