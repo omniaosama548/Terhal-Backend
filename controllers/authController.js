@@ -1,6 +1,7 @@
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import { generateToken } from '../services/tokenService.js';
+import { handleForgetPassword, handleResetPassword } from '../services/authService.js';
 
 //  Register a new user
 export const register = async (req, res) => {
@@ -46,5 +47,26 @@ export const login = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+// Handle forget password
+export const forgetPassword = async (req, res) => {
+  try {
+    const message = await handleForgetPassword(req.body.email);
+    res.status(200).json({ message });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+// Handle reset password
+export const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    const message = await handleResetPassword(token, password);
+    res.status(200).json({ message });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
