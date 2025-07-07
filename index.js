@@ -5,6 +5,7 @@ import favouriteRoutes from './routes/place-routes/FavouritePlace.Route.js';
 import ratingRoutes from './routes/place-routes/RatingPlace.Route.js';
 // Importing environment variables
 import dotenv from 'dotenv';
+import eventRouter from './routes/eventRoutes.js';
 dotenv.config();
 
 const app = express();
@@ -29,11 +30,12 @@ app.get('/places', async (req, res) => {
 });
 
 // favourite routes
-app.use("/place", favouriteRoutes);
+app.use("/places", favouriteRoutes);
 
 // Use the rating route
-app.use("/place", ratingRoutes);
+app.use("/places", ratingRoutes);
 
+app.use("/events",eventRouter);
 console.log("MONGO_URI =", process.env.MONGO_URI);
 
 mongoose.connect(process.env.MONGO_URI)
