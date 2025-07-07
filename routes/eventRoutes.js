@@ -6,7 +6,8 @@ const eventRouter=express.Router();
 eventRouter.use(authMiddleware);
 eventRouter.get('/',getAllEvents);
 eventRouter.get('/:id',getEventById);
+//admin routs user not allowed here will be updated
 eventRouter.post('/',createEvent);
 eventRouter.put('/:id',updateEvent);
-eventRouter.post('/:id',deleteEvent);
+eventRouter.delete('/:id',deleteEvent);
 export default eventRouter;

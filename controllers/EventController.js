@@ -62,9 +62,11 @@ export const updateEvent = async (req, res) => {
 
         const eventId = req.params.id;
         const updatedData = req.body;
-
-        const updatedEvent = await updateEvent(eventId, updatedData);
-
+        // console.log("im in controller" ,updatedData);
+        
+        const updatedEvent = await editEvent(eventId, updatedData);
+        console.log("updatedEvent");
+        
         if (!updatedEvent) {
             return res.status(404).json({ message: "Event not found" });
         }
@@ -83,13 +85,13 @@ export const deleteEvent = async (req, res) => {
         }
 
         const eventId = req.params.id;
-        const deletedEvent = await deleteEvent(eventId);
+        const deletedEvent = await removeEvent(eventId);
 
         if (!deletedEvent) {
             return res.status(404).json({ message: "Event not found" });
         }
 
-        res.status(200).json({ message: "Event deleted successfully" });
+        res.status(200).json({ message: "Event deleted successfully" ,event: deletedEvent });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

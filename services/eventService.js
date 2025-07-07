@@ -51,17 +51,20 @@ export const addEvent = async (eventData) => {
     }
 };
 
-// Update
 export const editEvent = async (id, updatedData) => {
     try {
+        console.log("im in service");
+        
         const event = await Event.findByIdAndUpdate(id, updatedData, { new: true });
+        console.log(event,"from service");
+        
         return event;
     } catch (error) {
         throw new Error(error.message);
     }
 };
 
-// Delete
+
 export const removeEvent = async (id) => {
     try {
         const deletedEvent = await Event.findByIdAndDelete(id);
