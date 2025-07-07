@@ -38,13 +38,13 @@ app.use("/places", favouriteRoutes);
 
 // Use the rating route
 app.use("/places", ratingRoutes);
+app.use("/places", placeRoutes);
 
 app.use("/events",eventRouter);
 console.log("MONGO_URI =", process.env.MONGO_URI);
 
 
 // This makes all /places/* go to placeRoutes
-app.use("/places", placeRoutes);
 
 
 

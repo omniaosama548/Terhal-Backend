@@ -1,4 +1,4 @@
-import Place from "../models/Places.js";
+import Place from "../models/Place.js";
 
 // Search places by a keyword query (case-insensitive)
 export const searchPlaces = async (query) => {
