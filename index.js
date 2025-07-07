@@ -6,6 +6,8 @@ import ratingRoutes from './routes/place-routes/RatingPlace.Route.js';
 // Importing environment variables
 import dotenv from 'dotenv';
 import eventRouter from './routes/eventRoutes.js';
+import adminRouter from './routes/adminRoutes.js';
+import adminAuthRouter from './routes/adminAuthRoutes.js';
 dotenv.config();
 
 const app = express();
@@ -17,7 +19,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth', authRoutes);
-
+app.use('/auth/admin',adminAuthRouter);
+app.use('/admin', adminRouter);
 //get all places for just testing
 app.get('/places', async (req, res) => {
   try {

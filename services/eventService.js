@@ -1,5 +1,5 @@
 
-import Event from "../models/EventModel.js";
+import Event from "../models/Event.js";
 
 export const getEarlyEvents = async (query) => {
     try {
