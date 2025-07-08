@@ -29,17 +29,7 @@ app.get('/', (req, res) => {
 app.use('/auth', authRoutes);
 app.use('/auth/admin',adminAuthRouter);
 app.use('/admin', adminRouter);
-//get all places for just testing
-app.get('/places', async (req, res) => {
-  try {
-    const places = await mongoose.connection.db.collection('places').find({}).toArray();
-    res.json(places);
-  } catch (error) {
-    console.error('Error fetching places:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
+// [MODIFIED] /places/suggested endpoint is now available for both anonymous and registered users
 // favourite routes
 app.use("/places", favouriteRoutes);
 
