@@ -32,18 +32,30 @@ export const getTopPlaces = async () => {
 };
 
 
+
+
 export const getPlaceById = async (placeId, userId) => {
   const place = await Place.findById(placeId);
-  console.log(place);
-  
+  console.log('Place found:', place);
+
   if (!place) {
     throw new Error('Place not found');
   }
-//add to history
-  await History.create({
+
+  const existingHistory = await History.findOne({
     userId: userId,
     placeId: placeId,
   });
+
+  if (!existingHistory) {
+    await History.create({
+      userId: userId,
+      placeId: placeId,
+    });
+    console.log('History created');
+  } else {
+    console.log('History already exists, skipping insert');
+  }
 
   return place;
 };
