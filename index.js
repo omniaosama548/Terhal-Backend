@@ -22,17 +22,7 @@ app.get('/', (req, res) => {
 app.use('/auth', authRoutes);
 app.use('/auth/admin',adminAuthRouter);
 app.use('/admin', adminRouter);
-//get all places for just testing
-app.get('/places', async (req, res) => {
-  try {
-    const places = await mongoose.connection.db.collection('places').find({}).toArray();
-    res.json(places);
-  } catch (error) {
-    console.error('Error fetching places:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
+// [MODIFIED] /places/suggested endpoint is now available for both anonymous and registered users
 // favourite routes
 app.use("/places", favouriteRoutes);
 
@@ -41,6 +31,19 @@ app.use("/places", ratingRoutes);
 app.use("/places", placeRoutes);
 
 app.use("/events",eventRouter);
+
+// [RE-ADDED] /places endpoint to return all visible places for testing (by user request)
+app.get('/places', async (req, res) => {
+  try {
+    const Place = (await import('./models/Place.js')).default;
+    const places = await Place.find({ visible: true });
+    res.json(places);
+  } catch (error) {
+    console.error('Error fetching places:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 console.log("MONGO_URI =", process.env.MONGO_URI);
 
 
