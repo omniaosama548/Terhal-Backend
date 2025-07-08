@@ -1,3 +1,4 @@
+import History from "../models/History.js";
 import Place from "../models/Place.js";
 
 // Search places by a keyword query (case-insensitive)
@@ -28,4 +29,21 @@ export const getTopPlaces = async () => {
     .sort({ rating: -1 }) // Sort places by rating in descending order (highest first)
     .limit(10) // Limit the result to top 10 places
     .populate("category"); // Replace category ObjectId with full category data
+};
+
+
+export const getPlaceById = async (placeId, userId) => {
+  const place = await Place.findById(placeId);
+  console.log(place);
+  
+  if (!place) {
+    throw new Error('Place not found');
+  }
+//add to history
+  await History.create({
+    userId: userId,
+    placeId: placeId,
+  });
+
+  return place;
 };
