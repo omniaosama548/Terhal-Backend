@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 export const handleForgetPassword=async (email) =>{
 const user=await User.findOne({email});
   if (!user) throw new Error("Email not found");
+    if (!user.isVerified) throw new Error("Please verify your email first");
   const token = crypto.randomBytes(32).toString("hex");
     user.passwordResetToken = token;
     user.passwordResetTokenExpires = Date.now() + 1000 * 60 * 15 ; //15 minutes
@@ -26,6 +27,7 @@ export const handleResetPassword = async (token, newPassword) => {
         passwordResetToken: token,
         passwordResetTokenExpires: { $gt: Date.now() } 
     });
+    if(!user.isVerified) throw new Error("Please verify your email first");
     if (!user) throw new Error("Invalid or expired token");
     user.password = newPassword;
     user.passwordResetToken = undefined;
