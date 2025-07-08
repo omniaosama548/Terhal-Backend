@@ -2,15 +2,8 @@
 import mongoose from 'mongoose';
 
 const favouriteSchema = new mongoose.Schema({
-  userId: {
-    type: String,
-    required: true,
-  },
-  placeId: {
-    type: String,
-    required: true,
-    ref: 'Place',
-  },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  placeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Place', required: true }
 }, {
   timestamps: true,
 });

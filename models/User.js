@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   mobile: { type: String, required: true },
   nationality: { type: String, required: true },
   language: { type: String, required: true },
+  isDeleted: { type: Boolean, default: false }
 });
 
 
