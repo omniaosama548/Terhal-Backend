@@ -1,4 +1,4 @@
-import { searchPlaces, getTopPlaces } from "../services/palcesService.js";
+import { searchPlaces, getTopPlaces ,getPlaceById } from "../services/palcesService.js";
 import Place from "../models/Place.js";
 import { getFavouritesByUserId } from "../services/place-services/favouritePlace.service.js";
 
@@ -73,3 +73,26 @@ export const handleSuggestedOrAllPlaces = async (req, res) => {
   }
 };
 
+export const handleGetPlaceById = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    console.log(userId,"user");
+    
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'Unauthorized' });
+    }
+
+    const placeId = req.params.id;
+
+    const place = await getPlaceById(placeId, userId);
+
+    if (!place) {
+      return res.status(404).json({ success: false, message: 'Place not found' });
+    }
+
+    res.json({ success: true, data: place });
+  } catch (err) {
+    console.error('Error in handleGetPlaceById:', err);
+    res.status(500).json({ success: false, message: 'Server Error' });
+  }
+};
