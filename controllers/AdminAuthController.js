@@ -19,7 +19,7 @@ export const login = async (req, res) => {
     }
 
     // أنشئ التوكن
-    const token = generateToken({ id: admin._id });
+    const token = generateToken({ id: admin._id , role:"admin"});
 
     // أعد البيانات بدون كلمة المرور
     res.json({

@@ -20,7 +20,7 @@ const AdminSchema = new mongoose.Schema({
   isSuper: {
     type: Boolean,
     default: false
-  },
+  }
 }, {
   timestamps: true
 });
