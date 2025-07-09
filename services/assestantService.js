@@ -10,17 +10,14 @@ const openai = new OpenAI({
 
 export const getReply = async (userMessage) => {
   try {
-    // 1. جلب الأماكن من قاعدة البيانات
     const places = await Place.find({}, 'name');
 
-    // 2. تبسيط البيانات
     const simplifiedPlaces = places.map((place) => ({
       name: place.name,
       location: place.location,
       description: place.description,
     }));
 
-    // 3. إنشاء الرسائل للذكاء الاصطناعي
     const messages = [
       {
         role: 'system',
@@ -51,7 +48,6 @@ ${JSON.stringify(simplifiedPlaces)}
       { role: 'user', content: userMessage },
     ];
 
-    // 4. إرسال الطلب إلى OpenAI
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages,
