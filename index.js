@@ -13,6 +13,7 @@ import adminAuthRouter from './routes/adminAuthRoutes.js';
 import historyRoutes from './routes/user-routes/history.route.js';
 import deleteRoutes from './routes/user-routes/deleteUser.route.js';
 import favoriteRoutes from './routes/user-routes/favorite.route.js';
+import assistantRouter from './routes/assestant.js';
 
 
 
@@ -45,7 +46,7 @@ app.use('/user', historyRoutes);
 app.use('/user', deleteRoutes);
 app.use('/user', favoriteRoutes);
 
-
+app.use('/assestant',assistantRouter)
 
 
 console.log("MONGO_URI =", process.env.MONGO_URI);
