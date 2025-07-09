@@ -1,6 +1,7 @@
 import express from "express";
 import { register, login } from "../controllers/authController.js";
 import { validateInput } from "../middlewares/validateInput.js";
+import { forgetPassword, resetPassword ,verifyEmail} from "../controllers/authController.js";
 import { body } from "express-validator";
 
 const router = express.Router();
@@ -28,8 +29,23 @@ router.post(
   validateInput,
   login
 );
-
-
-
+// Handle forget password
+router.post(
+  "/forgetPassword",
+  [body("email").isEmail().withMessage("Valid email is required")],
+  validateInput,
+  forgetPassword
+);
+router.post("/verify-email/:token", verifyEmail);
+// Handle reset password
+router.post(
+  "/resetPassword/:token",
+  [
+    
+       body("password").notEmpty().withMessage("Password is required"),
+  ],
+  validateInput,
+  resetPassword
+);  
 export default router;
 
