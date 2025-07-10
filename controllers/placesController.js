@@ -1,6 +1,8 @@
 import { searchPlaces, getTopPlaces ,getPlaceById } from "../services/palcesService.js";
 import Place from "../models/Place.js";
 import { getFavouritesByUserId } from "../services/place-services/favouritePlace.service.js";
+import { getPlacesNearby } from "../services/palcesService.js"; // [MODIFIED] Import the new service
+import User from "../models/User.js"; // [MODIFIED] Import User model for fetching user data
 
 // /places/search?q=...
 export const handleSearchPlaces = async (req, res) => {
@@ -141,5 +143,43 @@ export const handleGetPlaceById = async (req, res) => {
   } catch (err) {
     console.error('Error in handleGetPlaceById:', err);
     res.status(500).json({ success: false, message: 'Server Error' });
+  }
+};
+
+// [MODIFIED] Controller to get places near a user's location
+// Endpoint: GET /places/nearby?
+export const handleGetPlacesNearby = async (req, res) => {
+  try {
+    // Get latitude, longitude, and optional radius from query params
+    let lat = req.query.lat ? parseFloat(req.query.lat) : null;
+    let lng = req.query.lng ? parseFloat(req.query.lng) : null;
+    const radius = req.query.radius ? parseFloat(req.query.radius) : 5; // Default 5km
+
+    // [MODIFIED] If lat/lng not provided, fetch from user data in DB
+    if ((lat === null || lng === null) && req.user && req.user.id) {
+      const user = await User.findById(req.user.id);
+      if (user) {
+        lat = user.lastLat;
+        lng = user.lastLng;
+      }
+    }
+
+    // Validate input
+    if (lat === null || lng === null) {
+      return res.status(400).json({ message: "Latitude and longitude are required, either in query or user profile." });
+    }
+
+    // Get nearby places using the service
+    const places = await getPlacesNearby(lat, lng, radius);
+    // Respond with the found places
+    return res.status(200).json({
+      success: true,
+      message: `Places within ${radius} km of (${lat}, ${lng})`,
+      places
+    });
+  } catch (err) {
+    // Log and return error
+    console.error('[ERROR] Error in handleGetPlacesNearby:', err);
+    res.status(500).json({ error: "Something went wrong", details: err.message });
   }
 };
