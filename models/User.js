@@ -20,7 +20,10 @@ const userSchema = new mongoose.Schema({
   mobile: { type: String, required: true },
   nationality: { type: String, required: true },
   language: { type: String, enum: ['AR', 'EN'], default: 'AR' },
-
+  isDeleted: { type: Boolean, default: false },
+  // [MODIFIED] Store user's last known location for notifications
+  lastLat: { type: Number, default: null },
+  lastLng: { type: Number, default: null },
   image: { type: String, default: '' },
 
   role: {
