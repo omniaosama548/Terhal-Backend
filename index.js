@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import './cron/deleteInactiveUsers.js';
 
 import authRoutes from './routes/authRoutes.js';
+import profileRoute from './routes/profileRoutes.js'
 import favouriteRoutes from './routes/place-routes/FavouritePlace.Route.js';
 import ratingRoutes from './routes/place-routes/RatingPlace.Route.js';
 import placeRoutes from "./routes/placesRoutes.js";
@@ -23,7 +24,7 @@ dotenv.config();
 const app = express();
 const port = 3000;
 app.use(express.json());
-
+app.use('/uploads', express.static('uploads'));
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
@@ -42,13 +43,16 @@ app.use("/places", placeRoutes);
 //  event routes
 app.use("/events",eventRouter);
 
+//profile routes
+app.use('/profile', profileRoute);
+
 // user routes 
 app.use('/user', historyRoutes);
 app.use('/user', deleteRoutes);
 app.use('/user', favoriteRoutes);
 app.use('/user/reviews', reviewRoutes);
 
-app.use('/assestant',assistantRouter)
+// app.use('/assestant',assistantRouter)
 
 
 console.log("MONGO_URI =", process.env.MONGO_URI);
