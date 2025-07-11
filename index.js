@@ -14,6 +14,7 @@ import historyRoutes from './routes/user-routes/history.route.js';
 import deleteRoutes from './routes/user-routes/deleteUser.route.js';
 import favoriteRoutes from './routes/user-routes/favorite.route.js';
 import assistantRouter from './routes/assestant.js';
+import reviewRoutes from './routes/user-routes/review.route.js';
 
 
 
@@ -45,6 +46,7 @@ app.use("/events",eventRouter);
 app.use('/user', historyRoutes);
 app.use('/user', deleteRoutes);
 app.use('/user', favoriteRoutes);
+app.use('/user/reviews', reviewRoutes);
 
 app.use('/assestant',assistantRouter)
 
