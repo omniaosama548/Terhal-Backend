@@ -16,7 +16,7 @@ router.get('/', getAllReviews);
 // Authenticated: Create, get own, update, delete
 router.post('/', authMiddleware, createReview);
 router.get('/me', authMiddleware, getMyReview);
-router.patch('/:id', authMiddleware, updateReview);
-router.delete('/:id', authMiddleware, deleteReview);
+router.patch('/', authMiddleware, updateReview);
+router.delete('/', authMiddleware, deleteReview);
 
 export default router; 
