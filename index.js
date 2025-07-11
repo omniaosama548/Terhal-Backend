@@ -16,6 +16,7 @@ import deleteRoutes from './routes/user-routes/deleteUser.route.js';
 import favoriteRoutes from './routes/user-routes/favorite.route.js';
 import assistantRouter from './routes/assestant.js';
 import reviewRoutes from './routes/user-routes/review.route.js';
+import categoryRouter from './routes/categoryRoutes.js';
 
 
 
@@ -54,7 +55,7 @@ app.use('/user/reviews', reviewRoutes);
 
 app.use('/assestant',assistantRouter)
 
-
+app.use('/categories',categoryRouter);
 console.log("MONGO_URI =", process.env.MONGO_URI);
 
 
