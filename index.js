@@ -52,7 +52,7 @@ app.use('/user', deleteRoutes);
 app.use('/user', favoriteRoutes);
 app.use('/user/reviews', reviewRoutes);
 
-// app.use('/assestant',assistantRouter)
+app.use('/assestant',assistantRouter)
 
 
 console.log("MONGO_URI =", process.env.MONGO_URI);
