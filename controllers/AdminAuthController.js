@@ -6,7 +6,7 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // ابحث عن الأدمن
+  
     const admin = await Admin.findOne({ email });
     if (!admin) {
       return res.status(400).json({ message: "Invalid email or password" });
