@@ -1,25 +1,19 @@
 import mongoose from 'mongoose';
 
 const reviewSchema = new mongoose.Schema({
-  user: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
-    unique: true // Each user can only leave one review
-  },
-  rating: {
-    type: Number,
-    required: true,
-    min: 1,
-    max: 5
-  },
-  comment: {
-    type: String,
     required: true
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
+  status: {
+    type: String,
+    enum: ['happy', 'ordinary', 'sad'],
+    required: true
+  },
+  review: {
+    type: String,
+    required: true
   }
 });
 
