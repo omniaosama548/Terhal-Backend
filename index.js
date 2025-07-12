@@ -26,7 +26,8 @@ import reviewRoutes from './routes/user-routes/review.route.js';
 import categoryRouter from './routes/categoryRoutes.js';
 import adminPlaceRoutes from './routes/adminPlaceRoutes.js';
 
-
+import adminStatsRoutes from "./routes/adminStats.routes.js";
+import { initUserSocket } from "./sockets/userSocket.js";
 
 dotenv.config();
 
