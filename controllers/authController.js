@@ -75,10 +75,9 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Invalid email or password" });
+    const user = await User.findOne({ email, isDeleted: false });
+    if (!user) return res.status(400).json({ message: "Invalid email, password, or account deactivated" });
 
-   
     if (!user.isVerified) {
       return res.status(403).json({ message: "Please verify your email first" });
     }
@@ -104,6 +103,7 @@ export const login = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
+
 
 // Handle forget password
 export const forgetPassword = async (req, res) => {

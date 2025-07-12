@@ -8,7 +8,6 @@ import http from "http";
 import { Server } from "socket.io";
 import redisClient from "./lib/redisClient.js";
 
-import "./cron/deleteInactiveUsers.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import profileRoute from "./routes/profileRoutes.js";
