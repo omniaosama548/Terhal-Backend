@@ -45,7 +45,7 @@ export const getMyReview = async (req, res) => {
   }
 };
 
-// PATCH /user/reviews/:id - Update own review
+// PATCH /user/reviews/ - Update own review
 export const updateReview = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -71,7 +71,7 @@ export const updateReview = async (req, res) => {
   }
 };
 
-// DELETE /user/reviews/:id - Delete own review
+// DELETE /user/reviews/ - Delete own review
 export const deleteReview = async (req, res) => {
   try {
     const userId = req.user.id;
