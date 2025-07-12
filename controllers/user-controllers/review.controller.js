@@ -49,9 +49,8 @@ export const getMyReview = async (req, res) => {
 export const updateReview = async (req, res) => {
   try {
     const userId = req.user.id;
-    // const { id } = req.params;
     const { status, review } = req.body;
-    const reviewDoc = await Review.findOne({  userId });
+    const reviewDoc = await Review.findOne({ userId });
     if (!reviewDoc) return res.status(404).json({ message: 'Review not found.' });
     if (status !== undefined) {
       if (!['happy', 'ordinary', 'sad'].includes(status)) {
@@ -76,7 +75,6 @@ export const updateReview = async (req, res) => {
 export const deleteReview = async (req, res) => {
   try {
     const userId = req.user.id;
-    // const { id } = req.params; // no need for the review id , a user has only one review
     const review = await Review.findOneAndDelete({ userId });
     if (!review) return res.status(404).json({ message: 'Review not found.' });
     res.json({ success: true, message: 'Review deleted.' });
