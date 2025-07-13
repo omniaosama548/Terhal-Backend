@@ -1,10 +1,19 @@
-import { getEarlyEvents,getEvent ,addEvent ,editEvent,removeEvent } from "../services/eventService.js";
+import { getEarlyEvents, getEvent, addEvent, editEvent, removeEvent, getEarlyActiveEvents } from "../services/eventService.js";
+export const getLimitEarlyActiveEvents = async (req, res) => {
+    //no need for login
+    try {
+        const events = await getEarlyActiveEvents(req.query);
+        res.status(200).json(events);
+    } catch (error) {
+        res.status(400).json({ "message": error.message });
+    }
+}
 export const getAllEvents = async (req, res) => {
     try {
         // if the user is logedin
         const userId = req.user.id;
         console.log("im in the controller");
-        
+
         const events = userId ? await getEarlyEvents(req.query) : { "message": "You need to login first" };
         res.status(200).json(events);
     } catch (error) {
@@ -63,10 +72,10 @@ export const updateEvent = async (req, res) => {
         const eventId = req.params.id;
         const updatedData = req.body;
         // console.log("im in controller" ,updatedData);
-        
+
         const updatedEvent = await editEvent(eventId, updatedData);
         console.log("updatedEvent");
-        
+
         if (!updatedEvent) {
             return res.status(404).json({ message: "Event not found" });
         }
@@ -91,7 +100,7 @@ export const deleteEvent = async (req, res) => {
             return res.status(404).json({ message: "Event not found" });
         }
 
-        res.status(200).json({ message: "Event deleted successfully" ,event: deletedEvent });
+        res.status(200).json({ message: "Event deleted successfully", event: deletedEvent });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
