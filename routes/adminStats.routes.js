@@ -6,16 +6,16 @@ import {
   getTopRatedPlaces,
   getReviewsAnalysis
 } from '../controllers/adminStats.controller.js';
-import { protectAdmin } from '../middlewares/protectAdmin.js';
 import { isAdmin } from '../middlewares/isAdmin.js';
+import { authMiddleware } from './../middlewares/authMiddleware.js';
 
 
 
 
 const router = express.Router();
-
-router.get('/overview', protectAdmin, isAdmin, getOverviewStats);
-router.get('/nationalities', protectAdmin, isAdmin, getNationalitiesStats);
-router.get('/top-rated', protectAdmin, isAdmin, getTopRatedPlaces);
-router.get('/reviews-analysis', protectAdmin, isAdmin, getReviewsAnalysis);
+router.use(authMiddleware);
+router.get('/overview', isAdmin, getOverviewStats);
+router.get('/nationalities', isAdmin, getNationalitiesStats);
+router.get('/top-rated', isAdmin, getTopRatedPlaces);
+router.get('/reviews-analysis', isAdmin, getReviewsAnalysis);
 export default router;
