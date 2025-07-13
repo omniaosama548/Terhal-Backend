@@ -39,7 +39,7 @@ router.post(
 router.post("/verify-email/:token", verifyEmail);
 // Handle reset password
 router.post(
-  "/resetPassword/:token",
+  "/resetPassword",
   [
     
        body("password").notEmpty().withMessage("Password is required"),

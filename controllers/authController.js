@@ -117,12 +117,12 @@ export const forgetPassword = async (req, res) => {
 // Handle reset password
 export const resetPassword = async (req, res) => {
   try {
-    const { token } = req.params;
-    const { password } = req.body;
+    const { code, password } = req.body;
 
-    const message = await handleResetPassword(token, password);
+    const message = await handleResetPassword(code, password);
     res.status(200).json({ message });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
