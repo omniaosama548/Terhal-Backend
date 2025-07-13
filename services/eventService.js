@@ -1,18 +1,22 @@
 
 import Event from "../models/Event.js";
 export const getEarlyActiveEvents = async () => {
-    try {
-        const events = await Event.find()
-            .sort({ createdAt: -1 }) // earliest events first
-            .limit(3);
+  try {
+    const events = await Event.find({
+      status: { $in: ['active', 'upcoming'] },
+    })
+      .sort({ createdAt: 1 }) 
+      .limit(3);
 
-        const total = await Event.countDocuments();
+    const total = await Event.countDocuments({
+      status: { $in: ['active', 'upcoming'] },
+    });
 
-        return events;
-    } catch (error) {
-        return ({ "message": error.message });
-    }
-}
+    return  events;
+  } catch (error) {
+    return { message: error.message };
+  }
+};
 export const getEarlyEvents = async (query) => {
     try {
         const page = parseInt(query.page) || 1;
