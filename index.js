@@ -5,6 +5,7 @@ import express from "express";
 import mongoose from "mongoose";
 
 import http from "http";
+import cors from "cors";
 import { Server } from "socket.io";
 import redisClient from "./lib/redisClient.js";
 
@@ -24,7 +25,6 @@ import assistantRouter from './routes/assestant.js';
 import reviewRoutes from './routes/user-routes/review.route.js';
 import categoryRouter from './routes/categoryRoutes.js';
 import adminPlaceRoutes from './routes/adminPlaceRoutes.js';
-
 import adminStatsRoutes from "./routes/adminStats.routes.js";
 import { initUserSocket } from "./sockets/userSocket.js";
 
@@ -33,6 +33,7 @@ dotenv.config();
 const app = express();
 const port = 3000;
 app.use(express.json());
+app.use(cors());
 app.use("/uploads", express.static("uploads"));
 app.get("/", (req, res) => {
   res.send("Hello World!");
