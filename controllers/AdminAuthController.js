@@ -12,16 +12,13 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    // تحقق من كلمة المرور
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    // أنشئ التوكن
     const token = generateToken({ id: admin._id , role:"admin"});
 
-    // أعد البيانات بدون كلمة المرور
     res.json({
       message: "Login successful",
       token,
