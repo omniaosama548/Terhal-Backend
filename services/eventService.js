@@ -1,10 +1,20 @@
 
 import Event from "../models/Event.js";
+export const getEarlyActiveEvents = async () => {
+    try {
+        const events = await Event.find()
+            .sort({ createdAt: -1 }) // earliest events first
+            .limit(3);
 
+        const total = await Event.countDocuments();
+
+        return events;
+    } catch (error) {
+        return ({ "message": error.message });
+    }
+}
 export const getEarlyEvents = async (query) => {
     try {
-        console.log("im in the service");
-
         const page = parseInt(query.page) || 1;
         const limit = parseInt(query.limit) || 3;
         const skip = (page - 1) * limit;
@@ -54,10 +64,10 @@ export const addEvent = async (eventData) => {
 export const editEvent = async (id, updatedData) => {
     try {
         console.log("im in service");
-        
+
         const event = await Event.findByIdAndUpdate(id, updatedData, { new: true });
-        console.log(event,"from service");
-        
+        console.log(event, "from service");
+
         return event;
     } catch (error) {
         throw new Error(error.message);

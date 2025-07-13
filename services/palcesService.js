@@ -25,7 +25,7 @@ export const searchPlaces = async (query) => {
 export const getTopPlaces = async () => {
   return await Place.find({ visible: true }) // Only return visible places
     .sort({ rating: -1 }) // Sort places by rating in descending order (highest first)
-    .limit(10) // Limit the result to top 10 places
+    .limit(3) // Limit the result to top 3 places  used in the home page
     .populate("category"); // Replace category ObjectId with full category data
 };
 
