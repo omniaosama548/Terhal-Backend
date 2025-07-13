@@ -6,9 +6,9 @@ import { validateInput } from '../middlewares/validateInput.js';
 import { isAdmin } from '../middlewares/isAdmin.js';
 const eventRouter=express.Router();
 
-eventRouter.get('/eventsinHome', getLimitEarlyActiveEvents)
+eventRouter.get('/eventsinHome', getLimitEarlyActiveEvents); // non logedin
 eventRouter.use(authMiddleware);
-eventRouter.get('/',getAllEvents);  //nt included in the auth
+eventRouter.get('/',getAllEvents);  
 eventRouter.get('/:id',getEventById);
 //admin routs user not allowed here will be updated
 eventRouter.post('/',createEventValidation,validateInput,isAdmin,createEvent);
