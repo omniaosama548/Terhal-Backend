@@ -1,4 +1,4 @@
-import { searchPlaces, getTopPlaces ,getPlaceById } from "../services/palcesService.js";
+import { searchPlaces, getTopPlaces ,getPlaceById, getPlaces } from "../services/palcesService.js";
 import Place from "../models/Place.js";
 import { getFavouritesByUserId } from "../services/place-services/favouritePlace.service.js";
 import { getPlacesNearby } from "../services/palcesService.js"; // [MODIFIED] Import the new service
@@ -181,5 +181,14 @@ export const handleGetPlacesNearby = async (req, res) => {
     // Log and return error
     console.error('[ERROR] Error in handleGetPlacesNearby:', err);
     res.status(500).json({ error: "Something went wrong", details: err.message });
+  }
+};
+
+export const getAllPlaces = async (req, res) => {
+  try {
+    const places = await getPlaces(req.query);
+    res.status(200).json(places);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };
