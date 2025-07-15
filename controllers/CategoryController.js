@@ -2,14 +2,17 @@ import { addCategory, editCategory, getCategories, getCategory, removeCategory }
 
 export const getAllCategories = async (req, res) => {
     try {
-        // if the user is logedin
         const userId = req.user.id;
         console.log("im in the controller");
-        
-        const categories = userId ? await getCategories(req.query) : { "message": "You need to login first" };
+
+        if (!userId) {
+            throw new Error("access denied");
+        }
+
+        const categories = await getCategories(req.query);
         res.status(200).json(categories);
     } catch (error) {
-        res.status(400).json({ "message": error.message });
+        res.status(400).json({ error: error.message }); // Good format
     }
 }
 
