@@ -1,21 +1,7 @@
 // services/placeService.js
 import Place from "../models/Place.js";
 
-export const getPlaces = async (query) => {
-  const page = parseInt(query.page) || 1;
-  const limit = parseInt(query.limit) || 10;
-  const skip = (page - 1) * limit;
 
-  const places = await Place.find().skip(skip).limit(limit);
-  const total = await Place.countDocuments();
-
-  return {
-    currentPage: page,
-    totalPages: Math.ceil(total / limit),
-    totalItems: total,
-    data: places,
-  };
-};
 
 
 // Service function to create a new place
