@@ -27,6 +27,7 @@ import categoryRouter from './routes/categoryRoutes.js';
 import adminPlaceRoutes from './routes/adminPlaceRoutes.js';
 import adminStatsRoutes from "./routes/adminStats.routes.js";
 import { initUserSocket } from "./sockets/userSocket.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
 
 dotenv.config();
 
@@ -64,6 +65,9 @@ app.use("/user", historyRoutes);
 app.use("/user", deleteRoutes);
 app.use("/user", favoriteRoutes);
 app.use("/user/reviews", reviewRoutes);
+
+// payment routes
+app.use("/payment", paymentRoutes);
 
 app.use("/assestant", assistantRouter);
 
