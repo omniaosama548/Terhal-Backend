@@ -44,7 +44,7 @@ app.use('/auth/admin',adminAuthRouter);
 app.use('/admin', adminRouter);
 
 // admin place curd
-app.use('/admin', adminPlaceRoutes); 
+app.use('/admin/place', adminPlaceRoutes); 
 // [MODIFIED] /places/suggested endpoint is now available for both anonymous and registered users
 // favourite routes
 app.use("/places", favouriteRoutes);

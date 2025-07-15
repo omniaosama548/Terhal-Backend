@@ -1,6 +1,21 @@
 // controllers/adminPlaceController.js
 import * as placeService from '../services/adminPlaceService.js';
 
+export const getAllPlaces = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    console.log("im in the controller");
+
+    if (!userId) {
+      return res.status(401).json({ message: "You need to login first" });
+    }
+
+    const places = await placeService.getPlaces(req.query);
+    res.status(200).json(places);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 
 //Controller to handle creating a new place
 export const createPlace = async (req, res) => {

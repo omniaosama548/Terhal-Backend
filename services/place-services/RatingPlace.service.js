@@ -28,7 +28,6 @@ export const ratePlace = async (userId, placeId, ratingValue) => {
     });
   }
 
-  // 3️⃣ Update place avg rating
   const allRatings = await Rating.find({ placeId });
   const avgRating = allRatings.reduce((sum, r) => sum + r.rating, 0) / allRatings.length;
 

@@ -7,9 +7,11 @@ import {
 import { createAdminValidation, updateAdminValidation } from '../validations/adminValidations.js';
 import { validateInput } from '../middlewares/validateInput.js';
 import { isAdmin } from '../middlewares/isAdmin.js';
+import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 //import admin middleware
 const adminRouter=express.Router();
+adminRouter.use(authMiddleware);
 
 adminRouter.post('/',createAdminValidation,validateInput,isAdmin,addAdmin);
 adminRouter.put('/:id',updateAdminValidation,validateInput,isAdmin,updateAdmin);
