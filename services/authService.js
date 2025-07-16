@@ -29,7 +29,7 @@ export const handleResetPassword = async (code, newPassword) => {
   });
 
   if (!user) {
-    throw new Error("Invalid or expired code");
+    throw new Error("Invalid or expired token");
   }
 
   if (!user.isVerified) {

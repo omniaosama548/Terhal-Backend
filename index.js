@@ -1,8 +1,3 @@
-// ❌ الكود ده في ملف index.js مش عامل المشكلة
-// ✅ لكن الخطأ الفعلي جاى من ملف utils/stripe.js اللي بيستخدم Stripe بدون apiKey
-
-// --------- ده ملف index.js، مفيهوش مشكلة في Stripe -----------
-
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -13,6 +8,7 @@ import http from "http";
 import cors from "cors";
 import { Server } from "socket.io";
 import redisClient from "./lib/redisClient.js";
+
 
 import authRoutes from "./routes/authRoutes.js";
 import profileRoute from "./routes/profileRoutes.js";
@@ -31,45 +27,53 @@ import categoryRouter from './routes/categoryRoutes.js';
 import adminPlaceRoutes from './routes/adminPlaceRoutes.js';
 import adminStatsRoutes from "./routes/adminStats.routes.js";
 import { initUserSocket } from "./sockets/userSocket.js";
-// ❌ الخطأ بيظهر لما يتفعل الملف ده
-// import paymentRoutes from "./routes/paymentRoutes.js"; ← فيه كود بيستدعي Stripe بدون apiKey
+import paymentRoutes from "./routes/paymentRoutes.js";
 
 dotenv.config();
 
 const app = express();
 const port = 3000;
-
 app.use(express.json());
-app.use(cors({
-  origin: 'http://localhost:5173', 
-  credentials: true,
-}));
+app.use(cors());
 app.use("/uploads", express.static("uploads"));
-
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
 app.use('/auth', authRoutes);
-app.use('/auth/admin', adminAuthRouter);
+app.use('/auth/admin',adminAuthRouter);
 app.use('/admin', adminRouter);
-app.use('/admin/place', adminPlaceRoutes);
+
+// admin place curd
+app.use('/admin/place', adminPlaceRoutes); 
+// [MODIFIED] /places/suggested endpoint is now available for both anonymous and registered users
+// favourite routes
 app.use("/places", favouriteRoutes);
+
+// Use the rating route
 app.use("/places", ratingRoutes);
 app.use("/places", placeRoutes);
+
+//  event routes
 app.use("/events", eventRouter);
+
+//profile routes
 app.use("/profile", profileRoute);
+
+// user routes
 app.use("/user", historyRoutes);
 app.use("/user", deleteRoutes);
 app.use("/user", favoriteRoutes);
 app.use("/user/reviews", reviewRoutes);
 
-// ❌ دي هي اللي هتسبب الكراش لو stripe.js مش متظبط
-// app.use("/payment", paymentRoutes);
+// payment routes
+app.use("/payment", paymentRoutes);
 
-// app.use("/assestant", assistantRouter);
+app.use("/assestant", assistantRouter);
+
 app.use("/categories", categoryRouter);
-// app.use("/admin/stats", adminStatsRoutes);
+
+app.use("/admin/stats", adminStatsRoutes);
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -79,6 +83,18 @@ const io = new Server(server, {
 initUserSocket(io);
 
 console.log("MONGO_URI =", process.env.MONGO_URI);
+
+// mongoose.connect(process.env.MONGO_URI)
+//   .then(() => {
+//     console.log('Connected to MongoDB');
+//     app.listen(port, () => {
+//       console.log(`Server is running at http://localhost:${port}`);
+//     });
+//   })
+//   .catch((err) => {
+//     console.error('MongoDB connection error:', err);
+//   });
+
 
 (async () => {
   try {
