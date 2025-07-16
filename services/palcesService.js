@@ -92,8 +92,10 @@ export const getPlaces = async (query) => {
   const limit = parseInt(query.limit) || 10;
   const skip = (page - 1) * limit;
 
-  const places = await Place.find().skip(skip).limit(limit);
-  const total = await Place.countDocuments();
+  const filter = { visible: true }; 
+
+  const places = await Place.find(filter).skip(skip).limit(limit);
+  const total = await Place.countDocuments(filter); 
 
   return {
     currentPage: page,
@@ -102,3 +104,4 @@ export const getPlaces = async (query) => {
     data: places,
   };
 };
+

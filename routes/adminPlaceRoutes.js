@@ -4,6 +4,7 @@ import {
   createPlace,
   updatePlace,
   toggleVisibility,
+  getadminPlaces,
 } from '../controllers/adminPlaceController.js';
 import { isAdmin } from '../middlewares/isAdmin.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
@@ -12,7 +13,7 @@ import { validateInput } from '../middlewares/validateInput.js';
 
 const router = express.Router();
 
-
+router.get('/',authMiddleware,isAdmin,getadminPlaces);
 // Route for creating a new place
 router.post('/',authMiddleware, isAdmin, createPlaceValidation, validateInput, createPlace);
 
