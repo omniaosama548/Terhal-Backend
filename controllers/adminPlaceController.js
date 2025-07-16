@@ -13,7 +13,6 @@ export const createPlace = async (req, res) => {
   }
 };
 
-
 // Controller to handle updating an existing place
 export const updatePlace = async (req, res) => {
   try {
@@ -26,8 +25,6 @@ export const updatePlace = async (req, res) => {
     res.status(500).json({ message: 'Failed to update place', error: err.message });
   }
 };
-
-
 //  Controller to handle toggling the visibility of a place (soft delete)
 export const toggleVisibility = async (req, res) => {
   try {
@@ -38,5 +35,14 @@ export const toggleVisibility = async (req, res) => {
     res.json({ message: 'Visibility toggled', visible: place.visible });
   } catch (err) {
     res.status(500).json({ message: 'Failed to toggle visibility', error: err.message });
+  }
+};
+
+export const getadminPlaces = async (req, res) => {
+  try {
+    const places = await placeService.getAllAdminPlaces(req.query);
+    res.status(200).json(places);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };
