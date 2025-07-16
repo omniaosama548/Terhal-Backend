@@ -5,8 +5,7 @@ export const getEarlyActiveEvents = async () => {
     const events = await Event.find({
       status: { $in: ['active', 'upcoming'] },
     })
-      .sort({ createdAt: 1 }) 
-      .limit(3);
+      .sort({ createdAt: -1 }) ; // the newly added  first
 
     const total = await Event.countDocuments({
       status: { $in: ['active', 'upcoming'] },
