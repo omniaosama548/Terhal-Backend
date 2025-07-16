@@ -4,12 +4,16 @@ import History from '../models/History.js';
 import Rating from '../models/Rating.js';
 import Review from '../models/Review.js';
 import redisClient from '../lib/redisClient.js';
-
+import Place from '../models/Place.js';
+import Event from '../models/Event.js';
 export const getOverviewStatsService = async () => {
   const travelersCount = await User.countDocuments({ role: 'traveler' });
 
   const onlineUsers = await redisClient.sMembers('onlineUsers');
   const onlineUsersCount = onlineUsers.length;
+
+  const totalPlaces = await Place.countDocuments();
+  const totalEvents = await Event.countDocuments();
 
   const topLikedPlaces = await History.aggregate([
     { $group: { _id: "$placeId", count: { $sum: 1 } } },
@@ -26,8 +30,9 @@ export const getOverviewStatsService = async () => {
     { $unwind: "$place" }
   ]);
 
-  return { travelersCount, onlineUsersCount, topLikedPlaces };
+  return { travelersCount, onlineUsersCount, totalPlaces, totalEvents, topLikedPlaces };
 };
+
 
 export const getNationalitiesStatsService = async () => {
   const nationalities = await User.aggregate([
