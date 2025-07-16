@@ -96,7 +96,8 @@ export const login = async (req, res) => {
         email: user.email,
         mobile: user.mobile,
         nationality: user.nationality,
-        language: user.language
+        language: user.language,
+        role:user.role,
       }
     });
   } catch (err) {
