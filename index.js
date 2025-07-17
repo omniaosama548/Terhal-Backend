@@ -104,7 +104,7 @@ console.log("MONGO_URI =", process.env.MONGO_URI);
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to MongoDB");
 
-    server.listen(port, () => {
+    server.listen(port||process.env.PORT, () => {
       console.log(`Server is running at http://localhost:${port}`);
     });
   } catch (err) {
