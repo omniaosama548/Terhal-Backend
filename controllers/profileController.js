@@ -13,22 +13,26 @@ export const getUser=async (req, res) =>{
 // Update user profile
 export const updateUser = async (req, res) => {
   try {
-    let imagePath = null;
-
-    if (req.file) {
-      
-      const result = await cloudinary.uploader.upload(req.file.path, {
-        folder: 'user_profiles', 
-      });
-
-      imagePath = result.secure_url;
-      fs.unlinkSync(req.file.path);
+    if (!req.file) {
+      const updatedUser = await updateUserProfile(req.user.id, req.body, null);
+      return res.status(200).json({ message: 'Profile updated', user: updatedUser });
     }
 
-    const updatedUser = await updateUserProfile(req.user.id, req.body, imagePath);
-    res.status(200).json({ message: 'Profile updated', user: updatedUser });
+    cloudinary.uploader.upload_stream(
+      { folder: 'user_profiles' },
+      async (error, result) => {
+        if (error) return res.status(500).json({ message: 'Cloudinary upload failed' });
+
+        const imagePath = result.secure_url;
+        const updatedUser = await updateUserProfile(req.user.id, req.body, imagePath);
+        res.status(200).json({ message: 'Profile updated', user: updatedUser });
+      }
+    ).end(req.file.buffer);
+
   } catch (err) {
+    console.error(err);
     res.status(400).json({ message: err.message });
   }
 };
+
   
