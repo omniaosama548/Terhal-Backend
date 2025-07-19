@@ -11,9 +11,9 @@ export const getUser=async (req, res) =>{
 // Update user profile
 export const updateUser = async (req, res) => {
  try {
-    const imagePath = req.file
-      ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
-      : null;
+   const host = process.env.BASE_URL || `${req.protocol}://${req.get('host')}`;
+const imagePath = req.file ? `${host}/uploads/${req.file.filename}` : null;
+
 
     const updatedUser = await updateUserProfile(req.user.id, req.body, imagePath);
     res.status(200).json({ message: 'Profile updated', user: updatedUser });
